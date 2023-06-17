@@ -1,4 +1,4 @@
-(defproject data-fetcher-lambda "0.1.0-SNAPSHOT"
+(defproject data-fetcher-lambda "0.1.2-SNAPSHOT"
   :description "AWS Lambda function that fetches data from multiple external data sources."
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [cheshire "5.10.2"]

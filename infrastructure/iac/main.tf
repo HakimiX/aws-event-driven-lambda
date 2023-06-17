@@ -44,3 +44,29 @@ resource "aws_security_group" "vpc_sg" {
     Name = local.env_config.stack_name
   }
 }
+
+/*
+* Terraform code to create a Internet Gateway, NAT Gateway and Elastic IP (eip)
+*/
+
+resource "aws_internet_gateway" "internet_gw" {
+  vpc_id = aws_vpc.sample_vpc.id
+  tags = {
+    Name = local.env_config.stack_name
+  }
+}
+
+resource "aws_eip" "nat_eip" {
+  vpc = true
+  tags = {
+    Name = local.env_config.stack_name
+  }
+}
+
+resource "aws_nat_gateway" "nat_gw" {
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id     = aws_subnet.vpc_subnet.id
+  tags = {
+    Name = local.env_config.stack_name
+  }
+}

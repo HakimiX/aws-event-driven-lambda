@@ -22,6 +22,9 @@
   },
   "lambda": {
     "timeout": 300,
-    "memory_size": 512
+    "memory_size": 512,
+    "environment": {
+      "API_ENDPOINT": "https://jsonplaceholder.typicode.com"
+    }
   }
 }

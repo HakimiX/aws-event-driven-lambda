@@ -83,7 +83,7 @@ resource "aws_s3_bucket" "lambda_code_bucket" {
 resource "aws_s3_object" "data_fetcher_lambda_code" {
   bucket = aws_s3_bucket.lambda_code_bucket.id
   key    = "data_fetcher_lambda_code.jar"
-  source = "jars/data-fetcher-lambda-0.1.0-SNAPSHOT-standalone.jar"
+  source = "jars/data-fetcher-lambda-0.1.2-SNAPSHOT-standalone.jar"
 }
 
 /*
@@ -114,6 +114,7 @@ resource "aws_lambda_function" "data_fetcher_lambda" {
   environment {
     variables = {
       DATA_STORE_S3_BUCKET = aws_s3_bucket.data_store.id
+      API_ENDPOINT = local.env_config.lambda.environment.API_ENDPOINT
     }
   }
 

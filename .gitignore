@@ -1,2 +1,8 @@
 .idea
 .vscode
+
+**/.terraform/*
+# .tfstate files
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl

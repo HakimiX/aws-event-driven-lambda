@@ -1,0 +1,23 @@
+{
+  "env": "dev",
+  "config": {
+    "profile": "default",
+    "region": "eu-west-1",
+    "account": "123456789"
+  },
+  "stack_name": "aws-event-driven-lambda-stack",
+  "vpc": {
+    "cidr_block": "10.0.0.0/16"
+  },
+  "vpc_subnet": {
+    "cidr_block": "10.0.1.0/24"
+  },
+  "vpc_security_group": {
+    "ingress_rules": {
+      "from_port": 0,
+      "to_port": 0,
+      "protocol": "-1",
+      "cidr_blocks": ["0.0.0.0/0"]
+    }
+  }
+}

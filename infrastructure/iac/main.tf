@@ -71,7 +71,6 @@ resource "aws_nat_gateway" "nat_gw" {
   }
 }
 
-
 /*
 * lambda code bucket and lambda code uploaded to bucket
 */
@@ -149,11 +148,30 @@ resource "aws_iam_role_policy_attachment" "data_store_s3_write_only_policy" {
 }
 
 
-
-/*
-* Terraform code to create a S3 bucket
-*/
-
 resource "aws_s3_bucket" "data_store" {
   bucket = "data-store-5897867"
+}
+
+/*
+* Cloudwatch event to trigger lambda
+*/
+
+resource "aws_cloudwatch_event_rule" "fetch_data_event" {
+  name = "fetch-data-event"
+  description = "Triggers lambda function to fetch data"
+  schedule_expression = "rate(5 minutes)"
+}
+
+resource "aws_cloudwatch_event_target" "fetch_data_event_target" {
+  rule = aws_cloudwatch_event_rule.fetch_data_event.name
+  target_id = "fetch_data_event_target_id"
+  arn = aws_lambda_function.data_fetcher_lambda.arn
+}
+
+resource "aws_lambda_permission" "allow_cloudwatch_to_invoke_lambda" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.data_fetcher_lambda.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.fetch_data_event.arn
 }
